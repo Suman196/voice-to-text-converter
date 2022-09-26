@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* .speech {
+          border: 1px solid #ddd;
+          width: 300px;
+          padding: 0;
+          margin: 0;
+        } */
+        /* .speech input {
+          border: 0;
+          width: 240px;
+          display: inline-block;
+          height: 30px;
+        } */
+        .speech img {
+          float: right;
+          width: 40px;
+        }
+        #transcript{
+            border: 1px solid red;
+            width: 70%;
+            height: 100px;
+            padding: 15px;
+        }
+      </style>
+</head>
+<body>
+    <form id="labnol" method="post" action="pdf.php">
+        <div class="speech">
+          <input type="text" name="q" id="transcript" placeholder="Speak" />
+          <img onclick="startDictation()" src="//i.imgur.com/cHidSVu.gif" />
+          <button type="submit" name="submit">Submit</button>
+        </div>
+      </form>
+    <script>
+        function startDictation() {
+          if (window.hasOwnProperty('webkitSpeechRecognition')) {
+            var recognition = new webkitSpeechRecognition();
+      
+            recognition.continuous = false;
+            recognition.interimResults = false;
+      
+            recognition.lang = 'en-US';
+            recognition.start();
+      
+            recognition.onresult = function (e) {
+              document.getElementById('transcript').value = e.results[0][0].transcript;
+              recognition.stop();
+              document.getElementById('labnol').submit();
+            };
+      
+            recognition.onerror = function (e) {
+              recognition.stop();
+            };
+          }
+        }
+      </script>
+    
+</body>
+</html>
